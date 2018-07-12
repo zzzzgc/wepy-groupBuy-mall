@@ -1,0 +1,13 @@
+{
+  "description": "y",
+  "setting": {
+    "urlCheck": true,
+    "es6": false,
+    "postcss": false,
+    "minified": false
+  },
+  "compileType": "miniprogram",
+  "appid": "y",
+  "projectname": "y",
+  "miniprogramRoot": "./dist"
+}

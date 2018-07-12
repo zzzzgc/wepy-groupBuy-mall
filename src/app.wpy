@@ -1,0 +1,149 @@
+<style lang="scss">
+  @import './pages/common/weui.wxss';
+  @import 'pages/common/scssBase';
+
+  page {
+    /* background-color: #000; */
+  }
+
+  .container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /*justify-content: space-between;*/
+    /*padding: rpx(200) 0;*/
+    box-sizing: border-box;
+  }
+  /*
+    订正默认样式
+  */
+  button {
+    @extend .weui-btn;
+  }
+
+
+  /* START字体  */
+
+  @mixin fontFamily{
+    margin-left: rpx(10);
+    margin-right: rpx(10);
+    font-family: '微软雅黑';
+  }
+
+  .text-max {
+    /*只能为阿拉伯数字,如金额、时间  */
+    font-size: 40pt;
+    @include fontFamily;
+  }
+
+  .text-title-main {
+    /*页面大标题,一般用户结果(支付完成)、没有状态的页面  */
+    font-size: 20pt;
+    @include fontFamily;
+  }
+
+  .text-button {
+    /*页面内大按钮，与按钮搭配使用  */
+    font-size: 18pt;
+    @include fontFamily;
+  }
+
+  .text-title {
+    /*页面内首要信息，基准的，可以是连续的，如列标题，消息气泡  */
+    font-size: 17pt;
+    @include fontFamily;
+  }
+
+  .text-info {
+    /*页面内次要的描述信息,服务于首要信息并与之关联,如列表摘要  */
+    font-size: 14pt;
+    color: #888;
+    @include fontFamily;
+  }
+
+  .text-button-mini {
+    /*页面辅助信息,需要弱化的内容,如链接、小按钮  */
+    font-size: 13pt;
+    color: #576b95;
+    @include fontFamily;
+  }
+
+  .text-other {
+    /*说明文本, 如版权信息等不需要用户关注的信息  */
+    font-size: 11pt;
+    color: #b2b2b2;
+    @include fontFamily;
+  }
+
+  /* END字体  */
+
+</style>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class extends wepy.app {
+    /**
+     * 页面配置对象，对应于原生的page.json文件，类似于app.wpy中的config
+     */
+    config = {
+      pages: [
+        'pages/index',
+        'pages/merchant/merchantConfig',
+        'pages/merchant/groupBuy/newGroupBuy',
+        'pages/merchant/groupBuy/settingGroupBuy',
+        // 'pages/merchant/mebber/',
+        'pages/merchant/order/lookOrder',
+        'pages/merchant/order/lookOrderSoldGoods',
+        'pages/merchant/setting/myAssistant',
+        'pages/merchant/setting/myGroups',
+        'pages/merchant/identity/infoAuth',
+        'pages/merchant/identity/shopAuth'
+      ],
+      window: {
+        backgroundTextStyle: 'light',
+        navigationBarBackgroundColor: '#fff',
+        navigationBarTitleText: 'WeChat',
+        navigationBarTextStyle: 'black'
+      }
+    }
+
+    /**
+     * 全局渲染数据
+     * @type {{userInfo: null}}
+     */
+    globalData = {
+      userInfo: null
+    }
+
+    /**
+     * 项目启动后加载
+     */
+    onLaunch() {
+      var logs = wepy.getStorageSync('logs') || []
+      logs.unshift(Date.now())
+      wepy.setStorageSync('logs', logs)
+
+      wepy.getSetting({
+        success: res => {
+          if (res.authSetting['scope.userInfo']) {
+            // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+            wepy.getUserInfo({
+              success: res => {
+                // 可以将 res 发送给后台解码出 unionId
+                this.globalData.userInfo = res.userInfo
+                // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+                // 所以此处加入 callback 以防止这种情况
+                if (this.userInfoReadyCallback) {
+                  this.userInfoReadyCallback(res)
+                }
+              }
+            })
+          }
+        }
+      })
+    }
+  }
+</script>

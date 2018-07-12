@@ -1,0 +1,138 @@
+<style lang="scss">
+  @import "common/scssBase";
+  @import "common/scssBase";
+
+  .userinfo {
+    margin: rpx(150) 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: rpx(128);
+    height: rpx(128);
+    margin: rpx(20);
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+  }
+
+  page {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .home-title {
+  }
+
+  .home-button {
+    /* height: 47pt; */
+
+    width: rpx(500);
+    margin-top: rpx(20);
+  }
+
+  .button-hover {
+    opacity: 0.2
+  }
+
+  .test {
+    /* background-size: cover; */
+    /* background-image: url('http://t.cn/RdZT6xa'); */
+  }
+</style>
+<template>
+  <view class="container">
+    <view></view>
+    <view>
+      <text class="home-title text-title-main">水果社区团购</text>
+    </view>
+    <view class="userinfo">
+      <!--{{hasUserInfo}}-{{canIUse}}-->
+      <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" @getuserinfo="getUserInfo"> 获取头像昵称</button>
+      <block wx:else>
+        <image @tap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+        <text class="userinfo-nickname text-info">{{userInfo.nickName}}</text>
+      </block>
+    </view>
+    <view>
+      <button class='home-button text-button' type='primary' @tap='gotoMerchantConfig'>我是团长</button>
+      <button class='home-button text-button' type='default'>我是团员</button>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import tips from './common/utils/Tips'
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+
+    methods = {
+      bindViewTap: function () {
+        wepy.navigateTo({
+          url: '../logs/logs'
+        })
+      },
+      gotoMerchantConfig: function () {
+        wepy.navigateTo({
+          url: '/pages/merchant/merchantConfig'
+        })
+      },
+      test111: function () {
+        tips.loading()
+        setTimeout(() => {
+          wepy.hideLoading()
+        }, 1000)
+        console.log(tips.isLoading)
+      },
+      test222: function () {
+      }
+    }
+
+    data = {
+      userInfo: {
+        avatarUrl: '无',
+        nickName: '未知'
+      },
+      motto: 'Hello World',
+      hasUserInfo: false,
+      canIUse: wepy.canIUse('button.open-type.getUserInfo')
+    }
+
+    onLoad() {
+      if (this.$parent.globalData.userInfo) {
+        // 优先从全局中获取
+        this.userInfo = this.$parent.globalData.userInfo
+        this.hasUserInfo = true
+      } else if (this.data.canIUse) {
+        // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+        // 所以此处加入 callback 以防止这种情况,该回调函数是给app.wpy声明的.
+        this.$parent.userInfoReadyCallback = (response) => {
+          this.userInfo = response.userInfo
+          this.hasUserInfo = true
+          // 异步请求之后最好开启脏数据检测
+          this.$apply()
+        }
+      } else {
+        // 在没有 open-type=getUserInfo 版本的兼容处理
+        this.$parent.globalData.userInfo = wepy.getUserInfo()
+        this.userInfo = this.$parent.globalData.userInfo
+        this.hasUserInfo = true
+      }
+    }
+
+    // 获取用户信息的回调函数
+    getUserInfo(callbackInfo) {
+      this.$parent.globalData.userInfo = callbackInfo.detail.userInfo
+      this.userInfo = callbackInfo.detail.userInfo
+      this.hasUserInfo = true
+    }
+  }
+</script>
