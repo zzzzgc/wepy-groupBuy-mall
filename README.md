@@ -1,2 +1,0 @@
-# wepy-groupBuy-mall
-tuangou

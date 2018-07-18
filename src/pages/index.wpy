@@ -1,6 +1,5 @@
 <style lang="scss">
-  @import "common/scssBase";
-  @import "common/scssBase";
+  @import "../style/scssBase";
 
   .userinfo {
     margin: rpx(150) 0;
@@ -67,7 +66,7 @@
 
 <script>
   import wepy from 'wepy'
-  import tips from './common/utils/Tips'
+  import tips from '../utils/Tips'
 
   export default class Index extends wepy.page {
     config = {

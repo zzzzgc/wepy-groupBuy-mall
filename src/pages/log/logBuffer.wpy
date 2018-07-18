@@ -1,6 +1,6 @@
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
-  @import "../common/scssBase";
+  @import "../../style/scssBase";
 
 </style>
 
@@ -14,6 +14,7 @@
 <!--lang值  默认值:wxml   可选:wxml、xml、pug(原jade)-->
 <script>
   import wepy from 'wepy'
+  import dateUtils from '../../utils/Date'
 
   export default class Index extends wepy.page {
     /**
@@ -50,7 +51,7 @@
      */
     onLoad(options) {
       this.logs = (wepy.getStorageSync('logs') || []).map(log => {
-        return util.formatTime(new Date(log))
+        return dateUtils.formatTime(new Date(log))
       })
     }
 

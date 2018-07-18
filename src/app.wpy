@@ -1,6 +1,6 @@
 <style lang="scss">
-  @import './pages/common/weui.wxss';
-  @import 'pages/common/scssBase';
+  @import 'style/weui.wxss';
+  @import 'style/scssBase';
 
   page {
     /* background-color: #000; */

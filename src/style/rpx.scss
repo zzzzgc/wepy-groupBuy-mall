@@ -1,0 +1,12 @@
+@function rpx($value) {
+  @return $value * 1rpx;
+}
+
+/**
+  默认设置,page等
+ */
+
+
+page {
+  background: #0bb20c;
+}

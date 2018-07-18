@@ -1,6 +1,6 @@
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
-  @import "../common/scssBase";
+  @import "../../style/scssBase";
 
   /*START分组遍历和子项遍历专用*/
     /*例如:*/
