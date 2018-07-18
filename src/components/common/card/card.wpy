@@ -1,30 +1,75 @@
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
-  @import "../../style/scssBase";
+  .group-card {
+    border-radius: rpx(10);
+    border: rpx(1) solid #ddd;
+    margin: 0 rpx(10) rpx(20) rpx(18);
+    /*margin: 0 rpx(10) rpx(20) rpx(10);*/
+  }
 
+  .group-card-text {
+    margin: rpx(10);
+  }
+
+  .group-card-icon {
+    margin: 0 -10rpx -10rpx rpx(10);
+    width: rpx(60);
+    height: rpx(60);
+  }
+
+  .item-all-border {
+    border-top: rpx(1) solid #ddd;
+  }
+
+  .item-card {
+  }
 </style>
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
-  <view class="container log-list">
-    <block wx:for="{{logs}}" wx:for-item="log">
-      <text class="log-item">{{index + 1}}. {{log}}</text>
-    </block>
+  <view class="group-card">
+    <!-- 分组标签卡片  -->
+    <image class="group-card-icon" src="/image/alibabaIoc/{{icon}}.png"></image>
+    <text class="group-card-text text-title">{{title}}</text>
+    <!-- 标签下级卡片  -->
+    <view class="item-all-border">
+      <slot name="xxxx">
+        <text>加载失败</text>
+      </slot>
+    </view>
   </view>
 </template>
 
 <!--lang值  默认值:wxml   可选:wxml、xml、pug(原jade)-->
 <script>
   import wepy from 'wepy'
-  import dateUtils from '../../utils/Date'
 
-  export default class logBuffer extends wepy.page {
+  export default class card extends wepy.component {
     /**
      * 页面配置对象，对应于原生的page.json文件，类似于app.wpy中的config
      */
     config = {
-      navigationBarTitleText: '查看启动日志'
+      navigationBarTitleText: '标题卡片'
     }
+
+    /**
+     * 父组件传入的值
+     */
+    props = {
+      icon: {
+        type: String,
+        default: ''
+      },
+      title: {
+        type: String,
+        default: ''
+      }
+    }
+
+    /**
+     * events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
+     */
+    events = {}
 
     /**
      * 页面组件列表对象，声明页面所引入的组件列表
@@ -43,17 +88,16 @@
     /**
      * 页面渲染数据对象，存放可用于页面模板绑定的渲染数据
      */
-    data = {
-      logs: []
-    }
+    data = {}
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-      this.logs = (wepy.getStorageSync('logs') || []).map(log => {
-        return dateUtils.formatTime(new Date(log))
-      })
+      console.log('获取标题')
+      console.log(this.title)
+      console.log('获取图片')
+      console.log(this.icon)
     }
 
     /**
