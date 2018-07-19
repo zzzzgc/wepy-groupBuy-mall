@@ -82,6 +82,13 @@
       </view>
     </card>
 
+    <panel>
+      <view slot="title">新的标题</view>
+      <view slot="content">
+        <text>新的内容</text>
+      </view>
+    </panel>
+
     <!--<card :name.sync="typeGroup.name" :icon.sync="typeGroup.icon" wx:for="{{list}}" wx:for-item="typeGroup" wx:for-index="typeGroupIndex" wx:key="typeGroup.group" wx:if="{{typeGroup.pages}}">-->
       <!--<view slot="cardItem" wx:if="{{typeGroup.pages}}">-->
         <!--<view class="item-card">-->
@@ -106,6 +113,7 @@
 <script>
   import wepy from 'wepy'
   import card from '../../components/common/card/card'
+  import Panel from '../../components/common/Panel.wpy'
 
   export default class menubar extends wepy.component {
     /**
@@ -126,7 +134,8 @@
      * 页面组件列表对象，声明页面所引入的组件列表
      */
     components = {
-      card: card
+      card: card,
+      panel: Panel
     }
 
     /**
