@@ -16,6 +16,11 @@
     /*padding: rpx(200) 0;*/
     box-sizing: border-box;
   }
+
+  /* 默认块高度 */
+  $default_block_height: rpx(20);
+  /* 默认字体样式 */
+  $default_font-family: '微软雅黑';
   /*
     订正默认样式
   */
@@ -23,13 +28,12 @@
     @extend .weui-btn;
   }
 
-
   /* START字体  */
 
-  @mixin fontFamily{
+  @mixin fontFamily {
     margin-left: rpx(10);
     margin-right: rpx(10);
-    font-family: '微软雅黑';
+    font-family: default_font-family;
   }
 
   .text-max {
@@ -78,6 +82,21 @@
   }
 
   /* END字体  */
+
+  /* 默认边框(块样式) */
+  .default_block {
+    border: rpx(1) solid #ddd;
+    border-radius: rpx(10);
+    margin-bottom: $default_block_height;
+  }
+
+  /* 小按钮 */
+  .mini-button {
+    /*width: 25%;*/
+    margin-left: 5px;
+    margin-right: 5px
+  }
+
 
 </style>
 

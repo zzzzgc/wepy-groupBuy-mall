@@ -2,31 +2,75 @@
 <style lang="scss">
   @import "../../../style/scssBase";
 
+  .button-center {
+    /*width: 30%;*/
+    margin: rpx(20) rpx(200) rpx(20) rpx(200);
+  }
 </style>
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
   <view class="container">
+    <form @submit="formSubmit" @reset="formReset">
+      <view class="default_block">
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">我的团标题</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="groupTitle" class="weui-input" placeholder="请输入团标题"/>
+          </view>
+        </view>
+        <view class="weui-cell weui-cell_input">
+          <view class="weui-cell__hd">
+            <view class="weui-label">我的团公告</view>
+          </view>
+          <view class="weui-cell__bd">
+            <input name="groupDepict" class="weui-input" placeholder="请输入团公告"/>
+          </view>
+        </view>
+      </view>
 
+      <!-- 参团设置展示和参团修改 -->
+      <group :xxx="'asd'" :groupInfo.sync="mainGroupInfo"></group>
+
+      <button class="mini-button button-center text-button-mini" plain>添加商品</button>
+
+      <view class="btn-area">
+        <button type="primary" formType="submit">确定</button>
+        <button formType="reset">重写</button>
+      </view>
+    </form>
   </view>
 </template>
 
 <!--lang值  默认值:wxml   可选:wxml、xml、pug(原jade)-->
 <script>
   import wepy from 'wepy'
+  import groupBaseInfoShow from '../../../components/group/groupBaseInfoShow'
 
   export default class newGroupBuy extends wepy.page {
+    formSubmit(e) {
+      console.log('form发生了submit事件，携带数据为：', e.detail.value, '以及' + this.groupInfo)
+    }
+
+    formReset() {
+      console.log('form发生了reset事件')
+    }
+
     /**
      * 页面配置对象，对应于原生的page.json文件，类似于app.wpy中的config
      */
     config = {
-      navigationBarTitleText: '模板'
+      navigationBarTitleText: '新建团购'
     }
 
     /**
      * 页面组件列表对象，声明页面所引入的组件列表
      */
-    components = {}
+    components = {
+      group: groupBaseInfoShow
+    }
 
     /**
      * wxml事件处理函数对象，存放响应wxml中所捕获到的事件的函数，如bindtap、bindchange
@@ -40,12 +84,42 @@
     /**
      * 页面渲染数据对象，存放可用于页面模板绑定的渲染数据
      */
-    data = {}
+    data = {
+      /**
+       * 团购信息,需要包含 groupBaseInfo团购基础信息(团购标题团购设置等) groupProductInfo团购商品信息
+       */
+      mainGroupInfo: {
+        // userNeedInfo: [
+        //   'phone', 'add'
+        // ],
+        // groupType: [
+        //   'takeTheir', 'delivery'
+        // ]
+      }
+    }
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      // 优先获取全局团长预设参团信息,没有的话再去后台获取团长预设参团信息
+      if (this.$parent.globalData.groupBaseInfo != null) {
+        this.mainGroupInfo = Object.assign({}, this.$parent.globalData.groupBaseInfo, this.$parent.globalData.groupProductInfo)
+      } else {
+        // TODO 从后台获取团长预设参团信息
+        this.mainGroupInfo = {
+          userNeedInfo: [
+            '手机号码', '姓名'
+          ],
+          groupType: [
+            '配送', '自提'
+          ]
+        }
+        // 异步请求的脏数据检测
+        this.$apply()
+      }
+      console.log('newGroupBuy的mainGroupInfo信息')
+      console.log(this.mainGroupInfo)
     }
 
     /**
@@ -58,6 +132,8 @@
      * 生命周期函数--监听页面显示
      */
     onShow() {
+      // 更新团长团购信息
+      this.groupInfo = Object.assign({}, this.$parent.globalData.groupBaseInfo, this.$parent.globalData.groupProductInfo)
     }
 
     /**
@@ -70,6 +146,7 @@
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
+      // TODO 信息未保存,提示用户是否遗弃该设置,是的话就不操作并清空全局团长预设参团信息,否的话就重新跳转到新增团购页,把数据回填
     }
 
     /**

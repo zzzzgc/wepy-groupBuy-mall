@@ -2,42 +2,8 @@
 <style lang="scss">
   @import "../../style/scssBase";
 
-  /*START分组遍历和子项遍历专用*/
-  /*例如:*/
-  /*分组1*/
-  /*子项1*/
-  /*子项2*/
-
-  /*分组2*/
-  /*子项1*/
-
-  /*分则3*/
-  /*子项1*/
-  /*子项2*/
-  /*子项3*/
-
-  .navigator {
-  }
-
   .group-all-border {
-    width: 100%;
-  }
-
-  .group-card {
-    border-radius: rpx(10);
-    border: rpx(1) solid #ddd;
-    margin: 0 rpx(10) rpx(20) rpx(18);
-    /*margin: 0 rpx(10) rpx(20) rpx(10);*/
-  }
-
-  .group-card-text {
-    margin: rpx(10);
-  }
-
-  .group-card-icon {
-    margin: 0 -10rpx -10rpx rpx(10);
-    width: rpx(60);
-    height: rpx(60);
+    width: 95%;
   }
 
   .item-all-border {
@@ -52,68 +18,31 @@
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
-  <!--<view class="container">-->
   <view class="group-all-border">
-    <!--<view class="group-card" wx:for="{{list}}" wx:for-item="typeGroup" wx:for-index="typeGroupIndex" wx:key="typeGroup.group" wx:if="{{typeGroup.pages}}">-->
-      <!--&lt;!&ndash; 分组标签卡片  &ndash;&gt;-->
-      <!--<image class="group-card-icon" src="/image/alibabaIoc/{{typeGroup.icon}}.png"></image>-->
-      <!--<text class="group-card-text text-title">{{typeGroup.name}}</text>-->
-      <!--&lt;!&ndash; 标签下级卡片  &ndash;&gt;-->
-      <!--<view class="item-all-border">-->
-        <!--<view wx:if="{{typeGroup.pages}}">-->
-          <!--<view class="item-card">-->
-            <!--<navigator wx:for="{{typeGroup.pages}}" wx:for-item="card" wx:for-index="cardIndex" wx:key="card.name" url="/pages/merchant/{{typeGroup.group}}/{{card.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">-->
-              <!--<view class="weui-cell__hd">-->
-                <!--<image src='/image/green_tri.png' style="width: 20px;height: 20px;margin-right: 5px"/>-->
-              <!--</view>-->
-              <!--<view class="weui-cell__bd weui-cell_primary">-->
-                <!--<view class='text-info'>{{card.name}}</view>-->
-              <!--</view>-->
-              <!--<view class="weui-cell__ft weui-cell__ft_in-access"></view>-->
-            <!--</navigator>-->
-          <!--</view>-->
-        <!--</view>-->
-      <!--</view>-->
-    <!--</view>-->
-
-    <card title="购物车" icon="购物车">
-      <view solt="xxxx">
-        <text>新的内容</text>
-      </view>
-    </card>
-
-    <panel>
-      <view slot="title">新的标题</view>
-      <view slot="content">
-        <text>新的内容</text>
-      </view>
-    </panel>
-
-    <!--<card :name.sync="typeGroup.name" :icon.sync="typeGroup.icon" wx:for="{{list}}" wx:for-item="typeGroup" wx:for-index="typeGroupIndex" wx:key="typeGroup.group" wx:if="{{typeGroup.pages}}">-->
-      <!--<view slot="cardItem" wx:if="{{typeGroup.pages}}">-->
-        <!--<view class="item-card">-->
-          <!--<navigator wx:for="{{typeGroup.pages}}" wx:for-item="card" wx:for-index="cardIndex" wx:key="card.name" url="/pages/merchant/{{typeGroup.group}}/{{card.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">-->
-            <!--<view class="weui-cell__hd">-->
-              <!--<image src='/image/green_tri.png' style="width: 20px;height: 20px;margin-right: 5px"/>-->
-            <!--</view>-->
-            <!--<view class="weui-cell__bd weui-cell_primary">-->
-              <!--<view class='text-info'>{{card.name}}</view>-->
-            <!--</view>-->
-            <!--<view class="weui-cell__ft weui-cell__ft_in-access"></view>-->
-          <!--</navigator>-->
-        <!--</view>-->
-      <!--</view>-->
-    <!--</card>-->
-
+    <repeat for="{{list}}" item="typeGroup" index="typeGroupIndex" key="typeGroup.group">
+      <card wx:if="{{typeGroup.pages}}" :title="typeGroup.name" :icon="typeGroup.icon" :key="typeGroup.group">
+        <view slot="content" wx:if="{{typeGroup.pages}}">
+          <view class="item-card">
+            <navigator wx:for="{{typeGroup.pages}}" wx:for-item="card" wx:for-index="cardIndex" wx:key="card.name" url="/pages/merchant/{{typeGroup.group}}/{{card.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <view class="weui-cell__hd">
+                <image src='/image/green_tri.png' style="width: 20px;height: 20px;margin-right: 5px"/>
+              </view>
+              <view class="weui-cell__bd weui-cell_primary">
+                <view class='text-info'>{{card.name}}</view>
+              </view>
+              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
+          </view>
+        </view>
+      </card>
+    </repeat>
   </view>
-  <!--</view>-->
 </template>
 
 <!--lang值  默认值:wxml   可选:wxml、xml、pug(原jade)-->
 <script>
   import wepy from 'wepy'
   import card from '../../components/common/card/card'
-  import Panel from '../../components/common/Panel.wpy'
 
   export default class menubar extends wepy.component {
     /**
@@ -134,8 +63,7 @@
      * 页面组件列表对象，声明页面所引入的组件列表
      */
     components = {
-      card: card,
-      panel: Panel
+      card: card
     }
 
     /**
@@ -156,8 +84,6 @@
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-      console.log('获取菜单')
-      console.log(this.list)
     }
 
     /**

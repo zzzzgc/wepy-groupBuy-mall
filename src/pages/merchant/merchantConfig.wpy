@@ -1,6 +1,7 @@
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
   @import "../../style/scssBase";
+
 </style>
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
@@ -17,30 +18,23 @@
       </view>
     </navigator>
 
-    <!-- 用户收益情况  -->
-    <!--<view class="group-all-border">-->
-      <!--<view class="group-card">-->
-        <!--&lt;!&ndash; 分组标签卡片  &ndash;&gt;-->
-        <!--<image class="group-card-icon" src="../../../../image/alibabaIoc/清单.png"></image>-->
-        <!--<text class="group-card-text text-title">收益情况</text>-->
-        <!--&lt;!&ndash; 标签下级卡片  &ndash;&gt;-->
-        <!--<view class="item-all-border">-->
-          <!--<text class='text-info'>可提现:</text>-->
-          <!--<text class='text-info' style='color: red;'>￥{{earningsInfo.money}}</text>-->
-          <!--<text class='text-other'>(待结算￥{{earningsInfo.settlementMoney}})</text>-->
-          <!--<view>-->
-            <!--<button class="weui-btn" type="primary" size="mini" class='text-info-mini' style='width:45%;margin-left:5px;margin-right: 5px'>查看明细</button>-->
-            <!--<button class="weui-btn" type="default" size="mini" class='text-info-mini' style='width:45%;margin-left:5px;margin-right: 5px'>提现</button>-->
-          <!--</view>-->
-          <!--<view>-->
-            <!--<text class='text-other'>7日可提现,认证后只需1日</text>-->
-            <!--<navigator url="/pages/merchant/identity/infoAuth" style='display: inline-block'>-->
-              <!--<text class='text-button-mini'>去认证></text>-->
-            <!--</navigator>-->
-          <!--</view>-->
-        <!--</view>-->
-      <!--</view>-->
-    <!--</view>-->
+    <card title="收益情况" icon="清单">
+      <view slot="content">
+        <text class='text-info'>可提现:</text>
+        <text class='text-info' style='color: red;'>￥{{earningsInfo.money}}</text>
+        <text class='text-other'>(待结算￥{{earningsInfo.settlementMoney}})</text>
+        <view>
+          <button class="weui-btn" type="primary" size="mini" class='mini-button'>查看明细</button>
+          <button class="weui-btn" type="default" size="mini" class='mini-button'>提现</button>
+        </view>
+        <view>
+          <text class='text-other'>7日可提现,认证后只需1日</text>
+          <navigator url="/pages/merchant/identity/infoAuth" style='display: inline-block'>
+            <text class='text-button-mini'>去认证></text>
+          </navigator>
+        </view>
+      </view>
+    </card>
 
     <!-- 功能列表  -->
     <menubar :list.sync="list"></menubar>
@@ -149,6 +143,7 @@
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      console.log(Object.assign({}, { name: 1, xx: 0 }, { name: 2, xxx: 2 }))
       this.userInfo = this.$parent.globalData.userInfo
     }
 
@@ -156,42 +151,49 @@
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
+      console.log('渲染完成')
     }
 
     /**
      * 生命周期函数--监听页面显示
      */
     onShow() {
+      console.log('页面显示')
     }
 
     /**
      * 生命周期函数--监听页面隐藏
      */
     onHide() {
+      console.log('页面隐藏')
     }
 
     /**
      * 生命周期函数--监听页面卸载
      */
     onUnload() {
+      console.log('页面卸载')
     }
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
     onPullDownRefresh() {
+      console.log('下拉成功')
     }
 
     /**
      * 页面上拉触底事件的处理函数
      */
     onReachBottom() {
+      console.log('上拉成功')
     }
 
     /**
      * 用户点击右上角分享
      */
     onShareAppMessage() {
+      console.log('分享')
     }
   }
 </script>
