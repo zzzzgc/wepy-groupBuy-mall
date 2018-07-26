@@ -32,7 +32,7 @@
       </view>
 
       <!-- 参团设置展示和参团修改 -->
-      <group :xxx="'asd'" :groupInfo.sync="mainGroupInfo"></group>
+      <groupBaseInfoShow :groupInfo.sync="mainGroupInfo"></groupBaseInfoShow>
 
       <button class="mini-button button-center text-button-mini" plain>添加商品</button>
 
@@ -69,7 +69,7 @@
      * 页面组件列表对象，声明页面所引入的组件列表
      */
     components = {
-      group: groupBaseInfoShow
+      groupBaseInfoShow: groupBaseInfoShow
     }
 
     /**
@@ -89,12 +89,6 @@
        * 团购信息,需要包含 groupBaseInfo团购基础信息(团购标题团购设置等) groupProductInfo团购商品信息
        */
       mainGroupInfo: {
-        // userNeedInfo: [
-        //   'phone', 'add'
-        // ],
-        // groupType: [
-        //   'takeTheir', 'delivery'
-        // ]
       }
     }
 
@@ -108,11 +102,8 @@
       } else {
         // TODO 从后台获取团长预设参团信息
         this.mainGroupInfo = {
-          userNeedInfo: [
-            '手机号码', '姓名'
-          ],
-          groupType: [
-            '配送', '自提'
+          transportType: [
+            1
           ]
         }
         // 异步请求的脏数据检测

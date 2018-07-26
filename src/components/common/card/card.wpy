@@ -2,20 +2,24 @@
 <style lang="scss">
   @import "../../../style/scssBase";
 
+  .group-card {
+    width: 95%;
+  }
+
   .group-card-text {
     margin: rpx(10);
   }
 
   .group-card-icon {
     margin: 0 -10rpx -10rpx rpx(10);
-    width: rpx(60);
-    height: rpx(60);
+    width: rpx(50);
+    height: rpx(50);
   }
 </style>
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
-  <view class="default_block  group-card">
+  <view class="default_block">
     <!-- 分组标签卡片  -->
     <image class="group-card-icon" src="/image/alibabaIoc/{{icon}}.png"></image>
     <text class="group-card-text text-title">{{title}}</text>

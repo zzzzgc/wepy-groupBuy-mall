@@ -1,25 +1,40 @@
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
   @import "../../../style/scssBase";
+
+  checkbox {
+    display: block;
+  }
+
+  .checkboxOne {
+    margin-left: rpx(20);
+  }
+
+  .checkboxTwo {
+    margin-left: rpx(50);
+  }
 </style>
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
   <view class="container">
-    <form @submit="formSubmit" @reset="formReset">
-      <card title="收益情况" icon="清单">
+    <form style="width: 100%" @submit="formSubmit" @reset="formReset">
+      <card title="团员取货方式" icon="账单">
         <view slot="content">
-          <view class="weui-cell weui-cell_input">
-            <view class="weui-cell__hd">
-              <view class="weui-label">我的团标题</view>
-            </view>
-            <view class="weui-cell__bd">
-              <input name="groupTitle2" class="weui-input" placeholder="请输入团标题"/>
-            </view>
+          <checkbox-group @change="checkboxChange">
+            <label>
+              <checkbox class="checkboxOne" wx:for="{{transportItems}}" wx:for-item="transport" wx:for-key="transport.value" value="{{transport.value}}" checked="{{groupInfo.transportType[0] == transport.value|| groupInfo.transportType[1] == transport.value}}"> {{transport.name}}</checkbox>
+            </label>
+          </checkbox-group>
+          <view wx:if="{{groupInfo.transportType[0] == 2|| groupInfo.transportType[1] == 2}}">
+            <checkbox-group @change="addressChange">
+              <label>
+                <checkbox class="checkboxTwo" wx:for="{{noutoasiakasAddress}}" wx:for-item="address" wx:for-key="address.addressId" value="{{address.addressId}}" checked="{{address.checked}}"> {{address.address}}</checkbox>
+              </label>
+            </checkbox-group>
           </view>
         </view>
       </card>
-
       <view class="btn-area">
         <button type="primary" formType="submit">确定</button>
         <button formType="reset">重写</button>
@@ -31,6 +46,8 @@
 <!--lang值  默认值:wxml   可选:wxml、xml、pug(原jade)-->
 <script>
   import wepy from 'wepy'
+  import card from '../../../components/common/card/card'
+  // import Lang from '../../../utils/Lang'
 
   export default class settingGroupBuy extends wepy.page {
     /**
@@ -43,12 +60,31 @@
     /**
      * 页面组件列表对象，声明页面所引入的组件列表
      */
-    components = {}
+    components = {
+      card: card
+    }
 
     /**
      * wxml事件处理函数对象，存放响应wxml中所捕获到的事件的函数，如bindtap、bindchange
      */
-    methods = {}
+    methods = {
+      checkboxChange(e) {
+        console.log(e)
+        console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+        this.groupInfo.transportType = e.detail.value
+      },
+      addressChange(e) {
+        console.log(e)
+        console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+        this.groupInfo.noutoasiakasAddress = e.detail.value
+      },
+      formSubmit() {
+        this.$parent.globalData.groupInfo = this.groupInfo
+      },
+      formReset() {
+      }
+    }
+
     formSubmit(e) {
       console.log('form发生了submit事件，携带数据为：', e.detail.value, '以及' + this.groupInfo)
     }
@@ -56,6 +92,7 @@
     formReset() {
       console.log('form发生了reset事件')
     }
+
     /**
      * 其他函数对象写到与methods平级的地方
      */
@@ -63,46 +100,97 @@
     /**
      * 页面渲染数据对象，存放可用于页面模板绑定的渲染数据
      */
-    data = {}
+    data = {
+      groupInfo: {
+        // 配送类型 1配送  2自提
+        transportType: [
+          1, 2
+        ],
+        noutoasiakasAddress: [
+          13, 14, 15
+        ]
+      },
+      transportItems: [
+        { name: '配送', value: 1 },
+        { name: '自提', value: 2 }
+      ],
+      noutoasiakasAddress: [
+        {
+          address: '北京路某某街某某大道1号街',
+          name: '自提点1',
+          addressId: 13,
+          checked: true
+        },
+        {
+          address: '北京路某某街某某大道2号街',
+          name: '自提点2',
+          addressId: 14,
+          checked: true
+        },
+        {
+          address: '北京路某某街某某大道3号街',
+          name: '自提点3',
+          addressId: 15,
+          checked: true
+        }
+      ]
+    }
 
     /**
      * 生命周期函数--监听页面加载
      */
-    onLoad(options) {}
+    onLoad(options) {
+      console.log(options)
+      // TODO 加载用户默认配置
+    }
+
+    getIndexOfInfo(arr, object) {
+      if (arr.indexOf(object) !== -1) {
+        return true
+      }
+      return false
+    }
 
     /**
      * 生命周期函数--监听页面初次渲染完成
      */
-    onReady() {}
+    onReady() {
+    }
 
     /**
      * 生命周期函数--监听页面显示
      */
-    onShow() {}
+    onShow() {
+    }
 
     /**
      * 生命周期函数--监听页面隐藏
      */
-    onHide() {}
+    onHide() {
+    }
 
     /**
      * 生命周期函数--监听页面卸载
      */
-    onUnload() {}
+    onUnload() {
+    }
 
     /**
      * 页面相关事件处理函数--监听用户下拉动作
      */
-    onPullDownRefresh() {}
+    onPullDownRefresh() {
+    }
 
     /**
      * 页面上拉触底事件的处理函数
      */
-    onReachBottom() {}
+    onReachBottom() {
+    }
 
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage() {}
+    onShareAppMessage() {
+    }
   }
 </script>

@@ -3,7 +3,7 @@
   @import "../../style/scssBase";
 
   .group-all-border {
-    width: 95%;
+    /*width: 100%;*/
   }
 
   .item-all-border {
@@ -18,7 +18,7 @@
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
-  <view class="group-all-border">
+  <view class="group-all-border group-card">
     <repeat for="{{list}}" item="typeGroup" index="typeGroupIndex" key="typeGroup.group">
       <card wx:if="{{typeGroup.pages}}" :title="typeGroup.name" :icon="typeGroup.icon" :key="typeGroup.group">
         <view slot="content" wx:if="{{typeGroup.pages}}">
