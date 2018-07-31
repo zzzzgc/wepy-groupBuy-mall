@@ -1,7 +1,7 @@
 <!-- 菜单模板 -->
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
-  @import "../../style/scssBase";
+  @import "../../../style/scssBase";
 
   .item-all-border {
     border-top: rpx(1) solid #ddd;
@@ -38,7 +38,7 @@
 <!--lang值  默认值:wxml   可选:wxml、xml、pug(原jade)-->
 <script>
   import wepy from 'wepy'
-  import card from '../../components/common/card/card'
+  import card from '../card/card'
 
   export default class menubar extends wepy.component {
     /**

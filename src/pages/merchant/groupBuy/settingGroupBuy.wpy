@@ -31,14 +31,14 @@
           <view wx:if="{{groupInfo.transportType[0] == 2|| groupInfo.transportType[1] == 2}}">
             <checkbox-group @change="addressChange">
               <label>
-                <checkbox class="checkboxTwo" wx:for="{{noutoasiakasAddress}}" wx:for-item="address" wx:for-key="address.addressId" value="{{address.addressId}}" checked="{{address.checked}}"> {{address.address}}</checkbox>
+                <checkbox class="checkboxTwo" wx:for="{{noutoasiakasAddress}}" wx:for-item="address" wx:for-key="address.addressId" value="{{address.addressId}}" checked="{{address.checked}}"> {{address.name}}</checkbox>
               </label>
             </checkbox-group>
           </view>
         </view>
       </card>
       <view class="btn-area">
-        <button type="primary" formType="submit">新建团购</button>
+        <button type="primary" formType="submit">确定</button>
         <button formType="reset">重写</button>
       </view>
     </form>
@@ -49,7 +49,6 @@
 <script>
   import wepy from 'wepy'
   import card from '../../../components/common/card/card'
-  // import Lang from '../../../utils/Lang'
 
   export default class settingGroupBuy extends wepy.page {
     /**
@@ -86,28 +85,54 @@
         this.groupInfo.noutoasiakasAddress = e.detail.value
       },
       formSubmit() {
+        /**
+         * 提交数据格式groupInfo
+         *{
+         *  transportType: [xx,xx,xx],
+         *  noutoasiakasAddress: [xx,xx,xx]
+         *}
+         */
         this.$parent.globalData.groupInfo = this.groupInfo
         console.log('提交信息', this.groupInfo)
+        wepy.navigateTo({
+          url: '/pages/merchant/groupBuy/newGroupBuy'
+        })
       },
-      formReset() {
-      }
+      formReset() {}
     }
-
-    formSubmit(e) {
-      console.log('form发生了submit事件，携带数据为：', e.detail.value, '以及' + this.groupInfo)
-      // TODO 后台新增团购
-      wepy.navigateTo({
-        url: 'test?id=1'
-      })
-    }
-
-    formReset() {
-      console.log('form发生了reset事件')
-    }
-
     /**
      * 其他函数对象写到与methods平级的地方
      */
+    // 获取用户自提点地址
+    getNoutoasiakasAddress() {
+      // TODO 加载用户默认自提点配置
+      if (this.$parent.globalData.noutoasiakasAddress != null) {
+        this.noutoasiakasAddress = this.$parent.globalData.noutoasiakasAddress
+      } else {
+        let noutoasiakasAddressInfo = [
+          {
+            address: '北京路某某街某某大道1号街',
+            name: '自提点1',
+            addressId: 13,
+            checked: true
+          },
+          {
+            address: '北京路某某街某某大道2号街',
+            name: '自提点2',
+            addressId: 14,
+            checked: true
+          },
+          {
+            address: '北京路某某街某某大道3号街',
+            name: '自提点3',
+            addressId: 15,
+            checked: true
+          }
+        ]
+        this.noutoasiakasAddress = noutoasiakasAddressInfo
+        this.$parent.globalData.noutoasiakasAddress = noutoasiakasAddressInfo
+      }
+    }
 
     /**
      * 页面渲染数据对象，存放可用于页面模板绑定的渲染数据
@@ -115,45 +140,27 @@
     data = {
       groupInfo: {
         // 配送类型 1配送  2自提
-        transportType: [
-          1, 2
-        ],
-        noutoasiakasAddress: [
-          13, 14, 15
-        ]
+        transportType: [],
+        // 自提点地址的id集合
+        noutoasiakasAddress: []
       },
+      // 物流方式
       transportItems: [
         { name: '配送', value: 1 },
         { name: '自提', value: 2 }
       ],
-      noutoasiakasAddress: [
-        {
-          address: '北京路某某街某某大道1号街',
-          name: '自提点1',
-          addressId: 13,
-          checked: true
-        },
-        {
-          address: '北京路某某街某某大道2号街',
-          name: '自提点2',
-          addressId: 14,
-          checked: true
-        },
-        {
-          address: '北京路某某街某某大道3号街',
-          name: '自提点3',
-          addressId: 15,
-          checked: true
-        }
-      ]
+      // 自提点集合
+      noutoasiakasAddress: []
     }
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
+      console.log('页面显示')
+      // 获取默认配置
       this.groupInfo = JSON.parse(options.groupInfo)
-      // TODO 加载用户默认配置
+      this.getNoutoasiakasAddress()
     }
 
     getIndexOfInfo(arr, object) {
@@ -167,6 +174,7 @@
      * 生命周期函数--监听页面初次渲染完成
      */
     onReady() {
+      console.log('页面初次渲染完成')
     }
 
     /**

@@ -111,7 +111,7 @@
         }
       } else {
         // 在没有 open-type=getUserInfo 版本的兼容处理
-        this.$parent.globalData.userInfo = wepy.getUserInfo()
+        this.$parent.globalData.UserInfo = wepy.getUserInfo()
         this.userInfo = this.$parent.globalData.userInfo
         this.hasUserInfo = true
       }
@@ -119,7 +119,7 @@
 
     // 获取用户信息的回调函数
     getUserInfo(callbackInfo) {
-      this.$parent.globalData.userInfo = callbackInfo.detail.userInfo
+      this.$parent.globalData.UserInfo = callbackInfo.detail.userInfo
       this.userInfo = callbackInfo.detail.userInfo
       this.hasUserInfo = true
     }

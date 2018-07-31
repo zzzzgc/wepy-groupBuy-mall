@@ -52,7 +52,8 @@
 
   export default class newGroupBuy extends wepy.page {
     formSubmit(e) {
-      console.log('form发生了submit事件，携带数据为：', e.detail.value, '以及' + JSON.stringify(this.groupInfo))
+      this.mainGroupInfo = Object.assign({}, this.mainGroupInfo, e.detail.value)
+      console.log('form发生了submit事件，携带数据为：', this.mainGroupInfo)
     }
 
     formReset() {
@@ -90,26 +91,18 @@
        * 团购信息,需要包含 groupBaseInfo团购基础信息(团购标题团购设置等) groupProductInfo团购商品信息
        */
       mainGroupInfo: {
-      }
+        transportType: [],
+        noutoasiakasAddress: []
+      },
+      // 是否需要刷新数据
+      needRefresh: false
     }
 
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-      // 优先获取全局团长预设参团信息,没有的话再去后台获取团长预设参团信息
-      if (this.$parent.globalData.groupBaseInfo != null) {
-        this.mainGroupInfo = Object.assign({}, this.$parent.globalData.groupBaseInfo, this.$parent.globalData.groupProductInfo)
-      } else {
-        // TODO 从后台获取团长预设参团信息
-        this.mainGroupInfo = {
-          transportType: [
-            1
-          ]
-        }
-        // 异步请求的脏数据检测
-        this.$apply()
-      }
+      this.refreshData()
       console.log('newGroupBuy的mainGroupInfo信息')
       console.log(this.mainGroupInfo)
     }
@@ -124,14 +117,41 @@
      * 生命周期函数--监听页面显示
      */
     onShow() {
-      // 更新团长团购信息
-      this.groupInfo = Object.assign({}, this.$parent.globalData.groupBaseInfo, this.$parent.globalData.groupProductInfo)
+      // 刷新团长团购信息
+      if (this.needRefresh === true) {
+        console.log('重入页面,刷新数据')
+        this.refreshData()
+      }
+    }
+
+    // 刷新数据
+    refreshData() {
+      // 优先获取全局团长预设参团信息,没有的话再去后台获取团长预设参团信息
+      if (this.$parent.globalData.groupInfo != null) {
+        console.log('获取全局对象中的groupInfo赋值')
+        this.mainGroupInfo = Object.assign(this.mainGroupInfo, this.$parent.globalData.groupInfo)
+      } else {
+        // TODO 从后台获取默认的团长预设参团信息
+        console.log(' 从后台获取默认的团长预设参团信息赋值')
+        this.mainGroupInfo = {
+          transportType: [
+            2
+          ],
+          noutoasiakasAddress: [
+            13, 14
+          ]
+        }
+        // 异步请求的脏数据检测
+        this.$apply()
+        this.$parent.globalData.groupInfo = this.mainGroupInfo
+      }
     }
 
     /**
      * 生命周期函数--监听页面隐藏
      */
     onHide() {
+      this.needRefresh = true
     }
 
     /**
