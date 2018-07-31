@@ -1,3 +1,5 @@
+<!-- 参团信息展示与设置 -->
+
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
   @import "../../style/scssBase";
@@ -5,6 +7,8 @@
   .show-text {
     margin-left: rpx(25);
   }
+
+
 </style>
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->

@@ -1,7 +1,13 @@
+<!-- 卡片模板 -->
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
   @import "../../../style/scssBase";
-
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .group-card {
     width: 95%;
   }
@@ -12,20 +18,24 @@
 
   .group-card-icon {
     margin: 0 -10rpx -10rpx rpx(10);
-    width: rpx(50);
-    height: rpx(50);
+    /*width: rpx(50);*/
+    /*height: rpx(50);*/
+    width: 25px;
+    height: 25px;
   }
 </style>
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
-  <view class="default_block">
-    <!-- 分组标签卡片  -->
-    <image class="group-card-icon" src="/image/alibabaIoc/{{icon}}.png"></image>
-    <text class="group-card-text text-title">{{title}}</text>
-    <!-- 标签下级卡片  -->
-    <view class="item-all-border">
-      <slot name="content">加载失败...请刷新后重试</slot>
+  <view class="card">
+    <view class="group-card default_block">
+      <!-- 分组标签卡片  -->
+      <image class="group-card-icon" src="/image/alibabaIoc/{{icon}}.png"></image>
+      <text class="group-card-text text-title">{{title}}</text>
+      <!-- 标签下级卡片  -->
+      <view class="item-all-border">
+        <slot name="content">加载失败...请刷新后重试</slot>
+      </view>
     </view>
   </view>
 </template>

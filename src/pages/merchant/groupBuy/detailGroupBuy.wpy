@@ -1,46 +1,25 @@
-<!-- 菜单模板 -->
+<!-- 团购详细页，可以查看商品，可以开团，结束团等操作 -->
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
-  @import "../../style/scssBase";
-
-  .item-all-border {
-    border-top: rpx(1) solid #ddd;
-  }
-
-  .item-card {
-  }
-  /* END分组遍历和子项遍历专用  */
+  @import "../../../style/scssBase";
 </style>
 
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
-  <view style="width: 100%;">
-    <repeat for="{{list}}" item="typeGroup" index="typeGroupIndex" key="typeGroup.group">
-      <card wx:if="{{typeGroup.pages}}" :title="typeGroup.name" :icon="typeGroup.icon" :key="typeGroup.group">
-        <view slot="content" wx:if="{{typeGroup.pages}}">
-          <view class="item-card">
-            <navigator wx:for="{{typeGroup.pages}}" wx:for-item="card" wx:for-index="cardIndex" wx:key="card.name" url="/pages/merchant/{{typeGroup.group}}/{{card.url}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-              <view class="weui-cell__hd">
-                <image src='/image/green_tri.png' style="width: 20px;height: 20px;margin-right: 5px"/>
-              </view>
-              <view class="weui-cell__bd weui-cell_primary">
-                <view class='text-info'>{{card.name}}</view>
-              </view>
-              <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
-          </view>
-        </view>
-      </card>
-    </repeat>
+  <view class="container">
   </view>
 </template>
 
 <!--lang值  默认值:wxml   可选:wxml、xml、pug(原jade)-->
 <script>
   import wepy from 'wepy'
-  import card from '../../components/common/card/card'
 
-  export default class menubar extends wepy.component {
+  /**
+   * 注意：
+   * wepy = wx
+   * this.$parent = page
+   */
+  export default class Index extends wepy.page {
     /**
      * 页面配置对象，对应于原生的page.json文件，类似于app.wpy中的config
      */
@@ -48,19 +27,14 @@
       navigationBarTitleText: '模板'
     }
 
-    props = {
-      list: {
-        type: Array,
-        default: []
-      }
-    }
-
     /**
      * 页面组件列表对象，声明页面所引入的组件列表
+     * .default: 绑定小程序冒泡型事件，如bindtap，.default后缀可省略不写
+     * .stop: 绑定小程序捕获型事件，如catchtap
+     * .user: 绑定用户自定义组件事件，通过$emit触发。注意，如果用了自定义事件，则events中对应的监听函数
+     * 例如: @customEvent.user="myFn"   当子组件通过$emit触发customEvent后调用本身的myFn函数
      */
-    components = {
-      card: card
-    }
+    components = {}
 
     /**
      * wxml事件处理函数对象，存放响应wxml中所捕获到的事件的函数，如bindtap、bindchange
@@ -75,6 +49,11 @@
      * 页面渲染数据对象，存放可用于页面模板绑定的渲染数据
      */
     data = {}
+
+    /**
+     * events对象中所声明的函数为用于监听组件之间的通信与交互事件的事件处理函数
+     */
+    events = {}
 
     /**
      * 生命周期函数--监听页面加载

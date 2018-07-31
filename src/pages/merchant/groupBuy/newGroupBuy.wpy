@@ -1,3 +1,4 @@
+<!--新建团购页面-->
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
   @import "../../../style/scssBase";
@@ -51,7 +52,7 @@
 
   export default class newGroupBuy extends wepy.page {
     formSubmit(e) {
-      console.log('form发生了submit事件，携带数据为：', e.detail.value, '以及' + this.groupInfo)
+      console.log('form发生了submit事件，携带数据为：', e.detail.value, '以及' + JSON.stringify(this.groupInfo))
     }
 
     formReset() {

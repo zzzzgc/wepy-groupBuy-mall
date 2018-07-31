@@ -13,6 +13,11 @@
 <script>
   import wepy from 'wepy'
 
+  /**
+   * 注意：
+   * wepy = wx
+   * this.$parent = page
+   */
   export default class component extends wepy.component {
     /**
      * 页面配置对象，对应于原生的page.json文件，类似于app.wpy中的config

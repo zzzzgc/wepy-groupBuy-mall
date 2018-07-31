@@ -1,3 +1,4 @@
+<!-- 设置团购参数页面 -->
 <!--lang值  默认值:css   可选:css、less、scss、stylus、postcss-->
 <style lang="scss">
   @import "../../../style/scssBase";
@@ -18,7 +19,8 @@
 <!--lang值  默认值:babel   可选:babel、TypeScript-->
 <template>
   <view class="container">
-    <form style="width: 100%" @submit="formSubmit" @reset="formReset">
+    <form style="width: 100%;" @submit="formSubmit" @reset="formReset">
+      <text class="text-title-main">团购设置</text>
       <card title="团员取货方式" icon="账单">
         <view slot="content">
           <checkbox-group @change="checkboxChange">
@@ -36,7 +38,7 @@
         </view>
       </card>
       <view class="btn-area">
-        <button type="primary" formType="submit">确定</button>
+        <button type="primary" formType="submit">新建团购</button>
         <button formType="reset">重写</button>
       </view>
     </form>
@@ -50,6 +52,11 @@
   // import Lang from '../../../utils/Lang'
 
   export default class settingGroupBuy extends wepy.page {
+    /**
+     * 注意：
+     * wepy = wx
+     * this.$parent = page
+     */
     /**
      * 页面配置对象，对应于原生的page.json文件，类似于app.wpy中的config
      */
@@ -80,6 +87,7 @@
       },
       formSubmit() {
         this.$parent.globalData.groupInfo = this.groupInfo
+        console.log('提交信息', this.groupInfo)
       },
       formReset() {
       }
@@ -87,6 +95,10 @@
 
     formSubmit(e) {
       console.log('form发生了submit事件，携带数据为：', e.detail.value, '以及' + this.groupInfo)
+      // TODO 后台新增团购
+      wepy.navigateTo({
+        url: 'test?id=1'
+      })
     }
 
     formReset() {
@@ -140,7 +152,7 @@
      * 生命周期函数--监听页面加载
      */
     onLoad(options) {
-      console.log(options)
+      this.groupInfo = JSON.parse(options.groupInfo)
       // TODO 加载用户默认配置
     }
 
