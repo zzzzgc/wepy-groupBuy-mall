@@ -25,13 +25,13 @@
         <view slot="content">
           <checkbox-group @change="checkboxChange">
             <label>
-              <checkbox class="checkboxOne" wx:for="{{transportItems}}" wx:for-item="transport" wx:for-key="transport.value" value="{{transport.value}}" checked="{{groupInfo.transportType[0] == transport.value|| groupInfo.transportType[1] == transport.value}}"> {{transport.name}}</checkbox>
+              <checkbox class="checkboxOne" wx:for="{{transportItems}}" wx:for-item="transport" wx:key="transport.value" value="{{transport.value}}" checked="{{groupInfo.transportType[0] == transport.value|| groupInfo.transportType[1] == transport.value}}"> {{transport.name}}</checkbox>
             </label>
           </checkbox-group>
           <view wx:if="{{groupInfo.transportType[0] == 2|| groupInfo.transportType[1] == 2}}">
             <checkbox-group @change="addressChange">
               <label>
-                <checkbox class="checkboxTwo" wx:for="{{noutoasiakasAddress}}" wx:for-item="address" wx:for-key="address.addressId" value="{{address.addressId}}" checked="{{address.checked}}"> {{address.name}}</checkbox>
+                <checkbox class="checkboxTwo" wx:for="{{noutoasiakasAddress}}" wx:for-item="address" wx:key="address.addressId" value="{{address.addressId}}" checked="{{address.checked}}"> {{address.name}}</checkbox>
               </label>
             </checkbox-group>
           </view>

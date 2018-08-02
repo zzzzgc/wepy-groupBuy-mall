@@ -34,7 +34,6 @@ function addNotification(name, selector, observer) {
     }
 
     addNotices(newNotice)
-
   } else {
     console.log('addNotification error: no selector or name')
   }
@@ -161,7 +160,7 @@ function cmp(x, y) {
       }
 
       // Numbers, Strings, Functions, Booleans must be strictly equal
-      if (typeof(x[p]) !== 'object') {
+      if (typeof (x[p]) !== 'object') {
         return false
       }
 

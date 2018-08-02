@@ -19,11 +19,11 @@ export default class Validate {
     for (let i = 0; i < values.length; i++) {
       for (let j = 0; j < values.length; j++) {
         if (values[i] == values[j] && i != j) {
-          return false;
+          return false
         }
       }
     }
-    return true;
+    return true
   }
   /**
    * 验证电子邮箱格式
@@ -107,26 +107,26 @@ export default class Validate {
    * 验证最小值
    */
   static min(value, param) {
-    return this.optional(value) || Number(value) >= Number(param);
+    return this.optional(value) || Number(value) >= Number(param)
   }
   /**
    * 验证最大值
    */
   static max(value, param) {
-    return this.optional(value) || Number(value) <= Number(param);
+    return this.optional(value) || Number(value) <= Number(param)
   }
 
   /**
    * 验证时间
    */
   static after(value, param) {
-    return this.optional(value) || value >= param;
+    return this.optional(value) || value >= param
   }
   /**
    * 验证时间
    */
   static before(value, param) {
-    return this.optional(value) || value <= param;
+    return this.optional(value) || value <= param
   }
 
   /**

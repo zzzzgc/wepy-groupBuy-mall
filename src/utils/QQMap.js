@@ -29,13 +29,13 @@ var Utils = {
    * @param {Array|String} 检索数据
    */
   location2query (data) {
-    if (typeof data == 'string') {
+    if (typeof data === 'string') {
       return data
     }
     var query = ''
     for (var i = 0; i < data.length; i++) {
       var d = data[i]
-      if (!!query) {
+      if (query) {
         query += ';'
       }
       if (d.location) {
@@ -64,7 +64,7 @@ var Utils = {
    * 获取location参数
    */
   getLocationParam (location) {
-    if (typeof location == 'string') {
+    if (typeof location === 'string') {
       var locationArr = location.split(',')
       if (locationArr.length === 2) {
         location = {
@@ -181,7 +181,6 @@ var Utils = {
         default: {
           param.complete(that.buildErrorConfig(ERROR_CONF.SYSTEM_ERR, ERROR_CONF.SYSTEM_ERR_MSG))
         }
-
       }
     }
     return options
@@ -211,7 +210,6 @@ var Utils = {
 }
 
 class QQMapWX {
-
   /**
    * 构造函数
    *
@@ -266,7 +264,7 @@ class QQMapWX {
       if (!options.boundary) {
         requestParam.boundary = 'nearby(' + result.latitude + ',' + result.longitude + ',' + distance + ',' + auto_extend + ')'
       } else {
-        requestParam.boundary = options.boundary;
+        requestParam.boundary = options.boundary
       }
       wx.request(Utils.buildWxRequestConfig(options, {
         url: URL_SEARCH,
@@ -274,9 +272,9 @@ class QQMapWX {
       }))
     }
     if (!options.boundary) {
-      Utils.locationProcess(options, locationsuccess);
+      Utils.locationProcess(options, locationsuccess)
     } else {
-      locationsuccess();
+      locationsuccess()
     }
   }
 

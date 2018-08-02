@@ -133,14 +133,14 @@
       } else {
         // TODO 从后台获取默认的团长预设参团信息
         console.log(' 从后台获取默认的团长预设参团信息赋值')
-        this.mainGroupInfo = {
+        this.mainGroupInfo = Object.assign(this.mainGroupInfo, {
           transportType: [
             2
           ],
           noutoasiakasAddress: [
             13, 14
           ]
-        }
+        })
         // 异步请求的脏数据检测
         this.$apply()
         this.$parent.globalData.groupInfo = this.mainGroupInfo
